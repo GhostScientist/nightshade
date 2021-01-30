@@ -1,4 +1,3 @@
-import { time } from 'console';
 import { FC } from 'react';
 
 type PomodoroTimerProps = {
