@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './App.css';
 import { TimerButton } from './components/TimerButton';
 import { PomodoroTimer } from './components/PomodoroTimer';
@@ -43,9 +43,7 @@ function App() {
   const nextRound = () => {
     // Confirm user wants to skip
     incrementRound();
-  };
-
-  useEffect(() => setTimerForRound(currentRound), [currentRound]);
+  };  
 
   const confirmSkip = () => {
     if (window.confirm('Are you sure you want to skip this round?')) {
@@ -63,15 +61,20 @@ function App() {
     }
   };
 
+  const handleStopTimer = useCallback(() => {
+    clearInterval(intervalTimer.current);
+    toggleIsRunning();
+  }, []);
+  const handleNextRound = useCallback(() => { incrementRound(); }, []);
+
+  useEffect(() => setTimerForRound(currentRound), [currentRound]);  
+
   useEffect(() => {
     if (timeRemaining === 0) {
-      stopTimer();
-      nextRound();
+      handleStopTimer();
+      handleNextRound();
     }
-  }, [timeRemaining, stopTimer, nextRound]);
-
-  // Pomodoro Timer on click - isRunning ? stopTimer() : startTimer()
-
+  }, [timeRemaining, handleStopTimer, handleNextRound]);
 
   return (
     <div className="App">
