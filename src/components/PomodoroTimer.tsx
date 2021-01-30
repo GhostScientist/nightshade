@@ -2,11 +2,12 @@ import { time } from 'console';
 import { FC } from 'react';
 
 type PomodoroTimerProps = {
+    handleTimerInteraction: any;
     isRunning: boolean;
     timeLeft: number;
 };
 
-export const PomodoroTimer: FC<PomodoroTimerProps> = ({ isRunning, timeLeft }) => {
+export const PomodoroTimer: FC<PomodoroTimerProps> = ({ handleTimerInteraction, isRunning, timeLeft }) => {
     
     const formatTimeRemaining = (timeLeftInSeconds: number) : string => {
         const minutesRemaining = Math.floor(timeLeftInSeconds / 60);
@@ -16,7 +17,7 @@ export const PomodoroTimer: FC<PomodoroTimerProps> = ({ isRunning, timeLeft }) =
     };
     
     return (
-        <div className={`timer-container ${isRunning && 'isPlaying'}`}>
+        <div onClick={handleTimerInteraction} className={`timer-container ${isRunning && 'isPlaying'}`}>
             <h1 id='timer-label'>{formatTimeRemaining(timeLeft)}</h1>
         </div>
     );

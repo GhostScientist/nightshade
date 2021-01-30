@@ -43,6 +43,7 @@
   border: none;
   font-size: 24px;
   border-radius: 50px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 4px 5px);
 }
 
 .control-button svg {
@@ -62,6 +63,7 @@
   margin-bottom: 50px;
   margin-left: 20px;
   margin-right: 20px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 4px 5px);
 }
 
 #timer-label {

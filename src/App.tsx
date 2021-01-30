@@ -33,6 +33,14 @@ function App() {
     toggleIsRunning();
   };
 
+
+  const confirmReset = () => {
+    if (window.confirm('Are you sure you want reset the time for this round?')) {
+      stopTimer();
+      setTimerForRound(currentRound);
+    }
+  };
+
   const nextRound = () => {
     // Confirm user wants to skip
     incrementRound();
@@ -40,35 +48,44 @@ function App() {
 
   useEffect(() => setTimerForRound(currentRound), [currentRound]);
 
+  const confirmSkip = () => {
+    if (window.confirm('Are you sure you want to skip this round?')) {
+      nextRound();
+    }
+  };
+
   const setTimerForRound = (currentRound: number) => {
     if (currentRound === 9) {
       setTimeRemaining(LONG_BREAK);
     } else if (currentRound % 2 === 0) {
       setTimeRemaining(WORK);
-    } else if (currentRound% 2 === 1) {
+    } else if (currentRound % 2 === 1) {
       setTimeRemaining(SHORT_BREAK);
     }
-};
+  };
 
-useEffect(() => {
-  if (timeRemaining === 0) {
-    stopTimer();
-    nextRound();
-  }
-}, [timeRemaining]);
+  useEffect(() => {
+    if (timeRemaining === 0) {
+      stopTimer();
+      nextRound();
+    }
+  }, [timeRemaining]);
 
-return (
-  <div className="App">
-    <header className={`App-header ${isRunning ? 'green' : ''}`}>
-      <PomodoroTimer isRunning={isRunning} timeLeft={timeRemaining} />
-      <div className="controls-row">
-        <TimerButton type="reset" isRunning={isRunning} onButtonClick={() => isRunning ? stopTimer() : startTimer()} />
-        <TimerButton type="next" isRunning={isRunning} onButtonClick={() => nextRound()} />
-      </div>
+  // Pomodoro Timer on click - isRunning ? stopTimer() : startTimer()
 
-    </header>
-  </div>
-);
+
+  return (
+    <div className="App">
+      <header className={`App-header ${isRunning ? 'green' : ''}`}>
+        <PomodoroTimer handleTimerInteraction={() => isRunning ? stopTimer() : startTimer()} isRunning={isRunning} timeLeft={timeRemaining} />
+        <div className="controls-row">
+          <TimerButton type="reset" isRunning={isRunning} onButtonClick={() => confirmReset()} />
+          <TimerButton type="next" isRunning={isRunning} onButtonClick={() => confirmSkip()} />
+        </div>
+
+      </header>
+    </div>
+  );
 }
 
 export default App;
