@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { TimerButton } from './components/TimerButton';
 import { PomodoroTimer } from './components/PomodoroTimer';
-import { ArrowCounterclockwise } from 'react-bootstrap-icons';
 
 const WORK = 1500;
 const SHORT_BREAK = 300;
@@ -69,7 +68,7 @@ function App() {
       stopTimer();
       nextRound();
     }
-  }, [timeRemaining]);
+  }, [timeRemaining, stopTimer, nextRound]);
 
   // Pomodoro Timer on click - isRunning ? stopTimer() : startTimer()
 
