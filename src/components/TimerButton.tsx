@@ -1,14 +1,25 @@
 import { FC } from 'react';
-import { ArrowCounterclockwise, SkipForward } from 'react-bootstrap-icons';
+import { RotateCcw, SkipForward } from 'lucide-react';
 
 type TimerButtonProps = {
     isRunning: boolean;
     type: string;
-    onButtonClick: Function;
+    onButtonClick: () => void;
 };
 
 export const TimerButton: FC<TimerButtonProps> = ({ isRunning, type, onButtonClick }) => (
-    <div className="control-button">
-        <button style={{ backgroundColor: isRunning ? '#22AC38' : '#EB1649'}}onClick={() => onButtonClick()}>{type === "reset" && <ArrowCounterclockwise size={50} />}{type === "next" && <SkipForward size={45} />}</button>
-    </div>
+    <button 
+        onClick={onButtonClick}
+        className={`
+            btn btn-circle btn-lg
+            shadow-lg
+            transition-all duration-300
+            hover:scale-110
+            active:scale-95
+            ${isRunning ? 'btn-accent' : 'btn-error'}
+        `}
+    >
+        {type === "reset" && <RotateCcw size={28} />}
+        {type === "next" && <SkipForward size={28} />}
+    </button>
 );

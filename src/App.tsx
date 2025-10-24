@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import './App.css';
 import { TimerButton } from './components/TimerButton';
 import { PomodoroTimer } from './components/PomodoroTimer';
@@ -12,36 +12,39 @@ const LONG_BREAK = 900;
 // W - L
 
 function App() {
-  const [timeRemaining, setTimeRemaining] = useState(1500);
+  const [timeRemaining, setTimeRemaining] = useState(WORK);
   const [currentRound, setCurrentRound] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
   const incrementRound = () => setCurrentRound(prev => prev === 9 ? 0 : prev + 1);
 
-  let intervalTimer: any = useRef(null);
+  const intervalTimer = useRef<number | null>(null);
 
   const toggleIsRunning = () => setIsRunning(prev => !prev);
 
   const startTimer = () => {
-    intervalTimer.current = setInterval(() => setTimeRemaining(prevState => prevState > 0 ? prevState - 1 : 0), 1000);
+    intervalTimer.current = window.setInterval(() => 
+      setTimeRemaining(prevState => prevState > 0 ? prevState - 1 : 0), 
+      1000
+    );
     toggleIsRunning();
   };
 
   const stopTimer = () => {
-    clearInterval(intervalTimer.current);
+    if (intervalTimer.current) {
+      clearInterval(intervalTimer.current);
+    }
     toggleIsRunning();
   };
 
-
   const confirmReset = () => {
-    if (window.confirm('Are you sure you want reset the time for this round?')) {
+    if (window.confirm('Are you sure you want to reset the time for this round?')) {
       stopTimer();
       setTimerForRound(currentRound);
     }
   };
 
   const nextRound = () => {
-    // Confirm user wants to skip
     incrementRound();
   };  
 
@@ -62,12 +65,19 @@ function App() {
   };
 
   const handleStopTimer = useCallback(() => {
-    clearInterval(intervalTimer.current);
-    toggleIsRunning();
+    if (intervalTimer.current) {
+      clearInterval(intervalTimer.current);
+    }
+    setIsRunning(false);
   }, []);
-  const handleNextRound = useCallback(() => { incrementRound(); }, []);
 
-  useEffect(() => setTimerForRound(currentRound), [currentRound]);  
+  const handleNextRound = useCallback(() => { 
+    incrementRound(); 
+  }, []);
+
+  useEffect(() => {
+    setTimerForRound(currentRound);
+  }, [currentRound]);  
 
   useEffect(() => {
     if (timeRemaining === 0) {
@@ -76,16 +86,55 @@ function App() {
     }
   }, [timeRemaining, handleStopTimer, handleNextRound]);
 
-  return (
-    <div className="App">
-      <header className={`App-header ${isRunning ? 'green' : ''}`}>
-        <PomodoroTimer handleTimerInteraction={() => isRunning ? stopTimer() : startTimer()} isRunning={isRunning} timeLeft={timeRemaining} />
-        <div className="controls-row">
-          <TimerButton type="reset" isRunning={isRunning} onButtonClick={() => confirmReset()} />
-          <TimerButton type="next" isRunning={isRunning} onButtonClick={() => confirmSkip()} />
-        </div>
+  const getRoundType = () => {
+    if (currentRound === 9) return 'Long Break';
+    return currentRound % 2 === 0 ? 'Work Session' : 'Short Break';
+  };
 
-      </header>
+  return (
+    <div className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-500 ${
+      isRunning 
+        ? currentRound % 2 === 0 
+          ? 'bg-accent' 
+          : 'bg-success'
+        : currentRound % 2 === 0 
+          ? 'bg-primary' 
+          : 'bg-error'
+    }`}>
+      <div className="text-center space-y-8">
+        <div className="mb-4">
+          <h2 className="text-white text-2xl font-semibold mb-2">{getRoundType()}</h2>
+          <div className="flex justify-center gap-1">
+            {[0, 2, 4, 6, 8].map((round) => (
+              <div 
+                key={round}
+                className={`w-3 h-3 rounded-full ${
+                  currentRound >= round ? 'bg-white' : 'bg-white/30'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        
+        <PomodoroTimer 
+          handleTimerInteraction={() => isRunning ? stopTimer() : startTimer()} 
+          isRunning={isRunning} 
+          timeLeft={timeRemaining} 
+        />
+        
+        <div className="flex gap-4 justify-center">
+          <TimerButton 
+            type="reset" 
+            isRunning={isRunning} 
+            onButtonClick={confirmReset} 
+          />
+          <TimerButton 
+            type="next" 
+            isRunning={isRunning} 
+            onButtonClick={confirmSkip} 
+          />
+        </div>
+      </div>
     </div>
   );
 }

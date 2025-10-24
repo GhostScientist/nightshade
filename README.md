@@ -1,46 +1,114 @@
-# Getting Started with Create React App
+# 🍅 Nightshade - Modern Pomodoro Timer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A beautiful, simple, and configurable Pomodoro timer app built with modern web technologies.
 
-## Available Scripts
+## ✨ Features
 
-In the project directory, you can run:
+- **Classic Pomodoro Technique**: 25-minute work sessions followed by short breaks
+- **Automatic Progress Tracking**: Visual indicator showing your progress through the Pomodoro cycle
+- **Long Breaks**: After 4 work sessions, enjoy a longer 15-minute break
+- **Beautiful UI**: Modern design with smooth animations and color transitions
+- **Responsive**: Works perfectly on desktop and mobile devices
+- **Simple Controls**: Click the timer to start/pause, with reset and skip buttons
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **[Vite](https://vitejs.dev/)** - Lightning-fast build tool and dev server
+- **[React 18](https://react.dev/)** - Modern React with hooks and concurrent features
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[DaisyUI](https://daisyui.com/)** - Beautiful component library for Tailwind
+- **[Lucide React](https://lucide.dev/)** - Modern icon library
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🚀 Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 18+ 
+- npm or yarn
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Development
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Start the development server:
+```bash
+npm run dev
+```
 
-### `npm run eject`
+The app will open automatically at `http://localhost:3000`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Build
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Create a production build:
+```bash
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Preview
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Preview the production build:
+```bash
+npm run preview
+```
 
-## Learn More
+## 🎨 Customization
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Changing Timer Durations
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Edit the constants in `src/App.tsx`:
+
+```typescript
+const WORK = 1500;        // 25 minutes in seconds
+const SHORT_BREAK = 300;  // 5 minutes in seconds
+const LONG_BREAK = 900;   // 15 minutes in seconds
+```
+
+### Theming
+
+The app uses a custom DaisyUI theme defined in `tailwind.config.js`. You can customize the colors to match your preferences:
+
+```javascript
+pomodoro: {
+  "primary": "#FE4869",    // Work session color
+  "secondary": "#40C355",  // Break color
+  "accent": "#22AC38",     // Active work color
+  "error": "#EB1649",      // Default timer color
+}
+```
+
+## 📝 How to Use
+
+1. **Start a session**: Click on the timer display to start counting down
+2. **Pause**: Click again to pause the timer
+3. **Reset**: Click the reset button (↻) to restart the current session
+4. **Skip**: Click the skip button (⏭) to move to the next session
+5. **Track progress**: Watch the dots at the top to see how many work sessions you've completed
+
+## 🔄 The Pomodoro Cycle
+
+1. Work (25 min) → Short Break (5 min)
+2. Work (25 min) → Short Break (5 min)
+3. Work (25 min) → Short Break (5 min)
+4. Work (25 min) → Short Break (5 min)
+5. Work (25 min) → **Long Break (15 min)** ← Cycle repeats
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 🙏 Acknowledgments
+
+- Built with modern React and Vite for optimal performance
+- Styled with Tailwind CSS and DaisyUI for a beautiful, responsive UI
+- Icons from Lucide React
+
+---
+
+**Happy productivity! 🚀**

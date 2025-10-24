@@ -1,73 +1,14 @@
-.App {
-  text-align: center;
-  height: 100vh;
-  width: 100vw;
+/* Custom animations and styles that complement DaisyUI */
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
-.App-header {
-  background-color: #FE4869;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.controls-row {
-  display: flex;
-  flex-direction: row;
-  height: 100px;
-  width: 400px;
-  border: '2px solid white';
-}
-
-.green {
-  background-color: #40C355 !important;
-}
-
-.isPlaying {
-  background-color: #22AC38 !important;
-}
-
-.control-button { 
-  width: 600px;
-  height: 100px;
-}
-
-.control-button button {
-  width: 100px;
-  height: 100px;
-  color: white;
-  border: none;
-  font-size: 24px;
-  border-radius: 50px;
-  filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 4px 5px);
-}
-
-.control-button svg {
-  display: block;
-  margin: auto;
-}
-
-.timer-container {
-  width: 60%;
-  border-radius: 20px;
-  background-color: #EB1649;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
-  filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 4px 5px);
-}
-
-#timer-label {
-  font-size: 12vw;
-  width: 100%;
-  margin-bottom: 50px;
-  margin-top: 50px;
+.animate-pulse {
+  animation: subtle-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
